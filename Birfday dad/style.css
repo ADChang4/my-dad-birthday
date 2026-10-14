@@ -1,0 +1,441 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #14213d, #334c80);
+    font-family: 'Trebuchet MS', sans-serif;
+    color: white;
+    overflow-x: hidden;
+}
+
+.birthday-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.birthday-title {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    color: #ffdd76;
+    text-shadow: 0 0 20px #ffbd59;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+}
+
+.balloons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -130px;
+    width: 65px;
+    height: 85px;
+    border-radius: 50%;
+    animation: floatUp 9s linear infinite;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    top: 85px;
+    left: 32px;
+    width: 2px;
+    height: 85px;
+    background: white;
+}
+
+.red {
+    background: #ff6b6b;
+    left: 12%;
+    animation-delay: 0s;
+}
+
+.blue {
+    background: #4dabf7;
+    left: 32%;
+    animation-delay: 2s;
+}
+
+.yellow {
+    background: #ffd43b;
+    left: 68%;
+    animation-delay: 4s;
+}
+
+.purple {
+    background: #cc5de8;
+    left: 88%;
+    animation-delay: 1s;
+}
+
+.cake {
+    position: relative;
+    width: 230px;
+    height: 220px;
+    margin-top: 30px;
+    animation: cakeAppear 1.5s ease-out both;
+    animation-delay: 1s;
+}
+
+.cake-bottom {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 200px;
+    height: 90px;
+    background: #f5a9b8;
+    border-radius: 12px;
+    border-bottom: 14px solid #e77b9b;
+}
+
+.cake-top {
+    position: absolute;
+    bottom: 95px;
+    left: 40px;
+    width: 150px;
+    height: 65px;
+    background: #fff1d6;
+    border-radius: 12px;
+    border-bottom: 12px solid #ffc8dd;
+    z-index: 1;
+}
+
+.plate {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 230px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f1f3f5;
+}
+
+.candle {
+    position: absolute;
+    bottom: 155px;
+    left: 110px;
+    width: 10px;
+    height: 45px;
+    background: repeating-linear-gradient(
+        45deg,
+        white 0px,
+        white 7px,
+        #ff6b6b 7px,
+        #ff6b6b 14px
+    );
+    z-index: 2;
+}
+
+.flame {
+    position: absolute;
+    bottom: 43px;
+    left: -5px;
+    width: 20px;
+    height: 30px;
+    background: #ffd43b;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 20px #ffd43b;
+    animation: flicker 0.5s infinite alternate;
+}
+
+.birthday-message {
+    font-size: 1.4rem;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 2s;
+}
+
+.letter-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #ffdd76;
+    color: #14213d;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 3.5s;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.letter-button:hover {
+    transform: scale(1.1);
+    background: #ffeaa7;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0) rotate(-8deg);
+    }
+    to {
+        transform: translateY(-125vh) rotate(8deg);
+    }
+}
+
+@keyframes cakeAppear {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes flicker {
+    from {
+        transform: rotate(-50deg) scale(0.9);
+    }
+    to {
+        transform: rotate(-40deg) scale(1.1);
+    }
+}
+
+/* Keep balloons and confetti above the background */
+#confetti-container,
+#balloon-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+#confetti-container {
+    z-index: 10;
+}
+
+#balloon-container {
+    z-index: 5;
+}
+
+/* Clickable balloons */
+.party-balloon {
+    position: absolute;
+    bottom: -130px;
+    width: 65px;
+    height: 85px;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    animation: balloonRise 8s linear forwards;
+    box-shadow: inset -12px -8px 15px #00000025;
+}
+
+.party-balloon::after {
+    content: "";
+    position: absolute;
+    top: 85px;
+    left: 32px;
+    height: 75px;
+    width: 2px;
+    background: #ffffff90;
+}
+
+@keyframes balloonRise {
+    from {
+        transform: translateY(0) rotate(-8deg);
+    }
+    to {
+        transform: translateY(-130vh) rotate(8deg);
+    }
+}
+
+/* Confetti pieces */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 15px;
+    animation: confettiFall 4s linear forwards;
+}
+
+@keyframes confettiFall {
+    from {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* The number on the cake */
+.cake-age {
+    display: block;
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px #b94c70;
+    margin-top: 15px;
+}
+
+/* Birthday title entrance */
+.birthday-title {
+    animation: titlePop 1.5s ease-out forwards;
+}
+
+@keyframes titlePop {
+    0% {
+        opacity: 0;
+        transform: scale(0.2) rotate(-8deg);
+    }
+    65% {
+        opacity: 1;
+        transform: scale(1.15) rotate(3deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* Make sure the button is above balloons */
+.letter-button {
+    position: relative;
+    z-index: 6;
+}
+
+/* Letter page background */
+.letter-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8c8dc, #ffe5b4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+}
+
+/* Paper design */
+.letter-paper {
+    position: relative;
+    background: #fffaf0;
+    width: 100%;
+    max-width: 650px;
+    padding: 55px 45px;
+    border-radius: 15px;
+    box-shadow: 0 15px 45px #00000030;
+    border: 2px solid #f1d5c0;
+    text-align: left;
+    animation: letterAppear 1.2s ease-out;
+}
+
+/* Heart decoration */
+.letter-decoration {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 32px;
+    animation: heartBeat 2s infinite;
+}
+
+/* Greeting */
+.letter-paper h1 {
+    font-family: Georgia, serif;
+    color: #a0526d;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+/* Letter text */
+#typed-letter {
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 2;
+    color: #5a4545;
+    min-height: 200px;
+    white-space: pre-wrap;
+}
+
+/* Signature */
+.letter-ending {
+   
+.letter-ending {
+    text-align: right;
+    margin-top: 35px;
+    color: #a0526d;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.letter-ending.show {
+    opacity: 1;
+}
+
+}
+
+.letter-ending p {
+    font-family: Georgia, serif;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+.letter-ending h2 {
+    font-family: Georgia, serif;
+    font-size: 1.8rem;
+}
+
+/* Back button */
+.back-button {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 12px 25px;
+    background: #a0526d;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.back-button:hover {
+    background: #c06c8b;
+    transform: scale(1.05);
+}
+
+/* Letter entrance animation */
+@keyframes letterAppear {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Heart animation */
+@keyframes heartBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
